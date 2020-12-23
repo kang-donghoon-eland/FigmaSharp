@@ -6,5 +6,6 @@
         xmlns:local="clr-namespace:BasicRendering.Wpf"
         mc:Ignorable="d"
         Title="MainWindow">
+    <TabControl></TabControl>
     <ScrollViewer x:Name="ContainerPanel" Canvas.Left="0" Canvas.Top="0"/>
 </Window>

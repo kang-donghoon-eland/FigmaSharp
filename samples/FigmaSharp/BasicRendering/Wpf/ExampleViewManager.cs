@@ -36,11 +36,13 @@ namespace BasicRendering.Wpf
 {
     public class ExampleViewManager
     {
-        const string fileName = "qVIUSmz8AkK158q8pY3L23";// https://www.figma.com/file/qVIUSmz8AkK158q8pY3L23/NicoTest?node-id=0%3A1
+        //const string fileName = "qVIUSmz8AkK158q8pY3L23";// https://www.figma.com/file/qVIUSmz8AkK158q8pY3L23/NicoTest?node-id=0%3A1
+        const string fileName = "N48UVj8HUdQOTxn2hfqGHgld";
+        //const string fileName = "RAlQol7RzxvtYUQj24xHlZ";
 
-        readonly NodeProvider fileProvider;
+        readonly NodeProvider nodeProvider;
 
-        public string WindowTitle => fileProvider.Response.name;
+        public string WindowTitle => nodeProvider.Response.name;
 
         public ExampleViewManager(IScrollView scrollView)
         {
@@ -49,28 +51,47 @@ namespace BasicRendering.Wpf
 
             //TIP: the render consist in 2 steps:
             //1) generate all the views, decorating and calculate sizes
-            //2) with this views we generate the hierarchy and position all the views based in the
-            //native toolkit positioning system
+            //2) with this views we generate the hierarchy and position all the views based in the native toolkit positioning system
+
+            // 팁 : 렌더링은 2 단계로 구성됩니다.
+            // 1) 모든 뷰 생성, 장식 및 크기 계산
+            // 2)이 뷰를 사용하여 계층 구조를 생성하고 기본 툴킷 포지셔닝 시스템을 기반으로 모든 뷰를 배치합니다.
 
             //in this case we want use a remote file provider (figma url from our document)
-            fileProvider = new RemoteNodeProvider();
+            //이 경우 원격 파일 공급자 (문서의 figma url)를 사용하고 싶습니다.
+            nodeProvider = new RemoteNodeProvider();
 
-            //we initialize our renderer service, this uses all the converters passed
-            //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
-            var rendererService = new ViewRenderService(fileProvider, converters);
+            //we initialize our renderer service, this uses all the converters passed and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
+            // 렌더러 서비스를 초기화합니다. 이것은 전달 된 모든 변환기를 사용하고 기본적으로 <FigmaModel, IView, FigmaParentModel>을 포함하는 NodesProcessed 컬렉션을 생성합니다.
+            var rendererService = new ViewRenderService(nodeProvider, converters);
             rendererService.Start(fileName, scrollView);
 
-            //now we have all the views processed and the relationship we can distribute all the views into the desired base view
+            // 이제 모든 뷰가 처리되었으며 모든 뷰를 원하는 기본 뷰로 배포 할 수있는 관계가 있습니다.
             //var distributionService = new FigmaViewRendererDistributionService(rendererService);
             //distributionService.Start();
 
             var layoutManager = new StoryboardLayoutManager();
             layoutManager.Run(scrollView.ContentView, rendererService);
 
-            //We want know the background color of the figma camvas and apply to our scrollview
-            var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
+            //We want know the background color of the figma canvas and apply to our scrollview
+            var canvas = nodeProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
             if (canvas != null)
+            {
                 scrollView.BackgroundColor = canvas.backgroundColor;
+                scrollView.NodeName = canvas.name;
+                foreach (FigmaNode frame in canvas.children)
+                {
+                    // 프레임은 하나의 뷰모양을 가진다. 
+                    // 샘플에서는 하나의 안에 정의된 디자인을 화면에 표시하는 것을 목표로하여 구현한다.
+                    if (frame.type == "FRAME")
+                    {
+                        foreach (FigmaNode instance in (frame as FigmaFrame).children)
+                        {
+
+                        }
+                    }
+                }
+            }
 
             //NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
             scrollView.AdjustToContent();

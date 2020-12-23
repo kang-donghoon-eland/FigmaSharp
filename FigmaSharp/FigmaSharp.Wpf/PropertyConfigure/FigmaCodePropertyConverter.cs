@@ -22,6 +22,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+using FigmaSharp.Converters;
 using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
 
@@ -29,8 +30,14 @@ namespace FigmaSharp.Wpf.PropertyConfigure
 {
     public class CodePropertyConfigure : CodePropertyConfigureBase
     {
-        public override string ConvertToCode(string propertyName, CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+
+        public override string ConvertToCode(string propertyName, CodeNode currentNode, CodeNode parentNode, NodeConverter converter, CodeRenderService rendererService)
         {
+            throw new System.NotImplementedException();
+        }
+
+        //public override string ConvertToCode(string propertyName, CodeNode currentNode, CodeNode parentNode, NodeConverter converter CodeRenderService rendererService)
+        //{
         //    if (propertyName == CodeProperties.Frame)
         //    {
 
@@ -113,7 +120,7 @@ namespace FigmaSharp.Wpf.PropertyConfigure
         //        return string.Empty;
         //    }
 
-            throw new System.NotImplementedException(propertyName);
-        }
+        //    //throw new System.NotImplementedException(propertyName);
+        //}
     }
 }

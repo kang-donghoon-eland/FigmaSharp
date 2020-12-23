@@ -27,7 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
@@ -37,12 +37,13 @@ namespace FigmaSharp.Wpf.PropertyConfigure
 {
     public class ViewPropertyConfigure : ViewPropertyConfigureBase
     {
-        public override void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, ViewRenderService rendererService)
+        public override void Configure(string propertyName, ViewNode currentNode, ViewNode parentNode, NodeConverter converter, ViewRenderService rendererService)
         {
             if (propertyName == PropertyNames.AddChild)
             {
-                parent?.AddChild(view);
-                return;
+                parentNode.View.AddChild(currentNode.View);
+                //parent?.AddChild(view);
+                //return;
             }
             //if (propertyName == CodeProperties.Constraints)
             //{

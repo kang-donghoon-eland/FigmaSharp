@@ -41,6 +41,7 @@ namespace FigmaSharp.Views.Wpf
 
         public ImageView() : this(new System.Windows.Controls.Image())
         {
+            imageView = new System.Windows.Controls.Image();
         }
 
         IImage image;
@@ -52,6 +53,8 @@ namespace FigmaSharp.Views.Wpf
                 image = value;
                 var nativeImage = (ImageSource)Image.NativeObject;
                 imageView.Source = nativeImage;
+                imageView.Width = 100;
+                imageView.Height = 100;
             }
         }
     }

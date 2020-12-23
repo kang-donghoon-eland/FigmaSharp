@@ -34,17 +34,12 @@ namespace FigmaSharp.Views.Wpf
     public class Image : IImage
     {
         public object NativeObject => image;
-
         public Size Size
         {
             get => new Size((int)image.Width, (int)image.Height);
-            set
-            { 
-                // not possible :(
-                //image.Width = value.Width;
-                //image.Height = value.Height;
-            }
+            set => Size = value;
         }
+        
 
         ImageSource image;
         public Image(ImageSource image)

@@ -25,11 +25,13 @@
 using System;
 using System.Windows;
 
-using FigmaSharp.Converters; 
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
 using FigmaSharp.Views.Wpf;
+using System.Windows.Controls;
+using System.Text;
 
 namespace FigmaSharp.Wpf.Converters
 {
@@ -37,10 +39,11 @@ namespace FigmaSharp.Wpf.Converters
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(CanvasImage);
 
-        public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
+        public override IView ConvertToView(FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
             IView view;
-            if (rendererService.FileProvider.RendersAsImage(currentNode))
+            if (rendererService.NodeProvider.RendersAsImage(currentNode))
+
                 view = new ImageView();
             else
                 view = new View();
@@ -48,9 +51,9 @@ namespace FigmaSharp.Wpf.Converters
             var currengroupView = view.NativeObject as FrameworkElement;
             var figmaFrameEntity = (FigmaFrame)currentNode;
             currengroupView.Configure(currentNode);
-            
-            // TODO: Resolve alpha, background color
-            //currengroupView.AlphaValue = figmaFrameEntity.opacity;
+
+
+           ((UserControl)currengroupView).Opacity = figmaFrameEntity.opacity;
 
             if (figmaFrameEntity.HasFills)
             {
@@ -64,7 +67,7 @@ namespace FigmaSharp.Wpf.Converters
                     {
                         if (fill.visible)
                         {
-                            //currengroupView.Layer.BackgroundColor = fill.color.ToCGColor();
+                           ((UserControl)currengroupView).Background = fill.color.ToColor();
                         }
                     }
                     else
@@ -75,12 +78,18 @@ namespace FigmaSharp.Wpf.Converters
                 }
             }
 
-            return view; 
+            return view;
         }
-         
+
         public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
-            return string.Empty;
+            var FigmaFrame = (FigmaFrame)currentNode.Node;
+            StringBuilder builder = new StringBuilder();
+
+            var name = Resources.Ids.Conversion.NameIdentifier;
+
+            
+            return builder.ToString();
         }
     }
 }
