@@ -35,6 +35,9 @@ using System.Text;
 
 namespace FigmaSharp.Wpf.Converters
 {
+    /// <summary>
+    /// 뷰레이아웃을 생성합니다.
+    /// </summary>
     public class FrameConverter : FrameConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(CanvasImage);
@@ -43,7 +46,6 @@ namespace FigmaSharp.Wpf.Converters
         {
             IView view;
             if (rendererService.NodeProvider.RendersAsImage(currentNode))
-
                 view = new ImageView();
             else
                 view = new View();
@@ -53,7 +55,7 @@ namespace FigmaSharp.Wpf.Converters
             currengroupView.Configure(currentNode);
 
 
-           ((UserControl)currengroupView).Opacity = figmaFrameEntity.opacity;
+           currengroupView.Opacity = figmaFrameEntity.opacity;
 
             if (figmaFrameEntity.HasFills)
             {
@@ -67,7 +69,7 @@ namespace FigmaSharp.Wpf.Converters
                     {
                         if (fill.visible)
                         {
-                           ((UserControl)currengroupView).Background = fill.color.ToColor();
+                           //((UserControl)currengroupView).Background = fill.color.ToColor();
                         }
                     }
                     else
@@ -77,7 +79,7 @@ namespace FigmaSharp.Wpf.Converters
                     //currengroupView.Layer.Hidden = !fill.visible;
                 }
             }
-
+            
             return view;
         }
 

@@ -80,11 +80,12 @@ namespace FigmaSharp.Converters
 			return ids;
         }
 
-		string RemoveQuotes(string data, bool enable = false)
-		{
+        string RemoveQuotes(string data, bool enable = false)
+        {
             if (enable)
-            return data.Replace("\"", "");
-            return data;
+                return data.Replace("\"", "");
+            else
+                return data;
         }
 
         protected string GetIdentifierValue (string data, string parameter, bool removeQuotes = false)

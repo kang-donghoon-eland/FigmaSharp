@@ -31,6 +31,8 @@ using System.Threading.Tasks;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
+using FigmaSharp.Views.Wpf;
+using FigmaSharp.Wpf.Converters;
 
 namespace BasicRendering.Wpf
 {
@@ -64,31 +66,46 @@ namespace BasicRendering.Wpf
             //we initialize our renderer service, this uses all the converters passed and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
             // 렌더러 서비스를 초기화합니다. 이것은 전달 된 모든 변환기를 사용하고 기본적으로 <FigmaModel, IView, FigmaParentModel>을 포함하는 NodesProcessed 컬렉션을 생성합니다.
             var rendererService = new ViewRenderService(nodeProvider, converters);
-            rendererService.Start(fileName, scrollView);
+            ViewRenderServiceOptions option = new ViewRenderServiceOptions();
+            option.FrameInMainViews = true;
+            option.GenerateMainView = false;
+            option.ScanChildrenFromFigmaInstances = true;
+
+            rendererService.Start(fileName, scrollView, option );
 
             // 이제 모든 뷰가 처리되었으며 모든 뷰를 원하는 기본 뷰로 배포 할 수있는 관계가 있습니다.
             //var distributionService = new FigmaViewRendererDistributionService(rendererService);
             //distributionService.Start();
 
             var layoutManager = new StoryboardLayoutManager();
-            layoutManager.Run(scrollView.ContentView, rendererService);
+            
 
             //We want know the background color of the figma canvas and apply to our scrollview
             var canvas = nodeProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
             if (canvas != null)
             {
-                scrollView.BackgroundColor = canvas.backgroundColor;
-                scrollView.NodeName = canvas.name;
+                List<View> viewNodeList = new List<View>();
+                //layoutManager.Run( scrollView.ContentView, rendererService);
+                //scrollView.NodeName = canvas.name;
                 foreach (FigmaNode frame in canvas.children)
                 {
-                    // 프레임은 하나의 뷰모양을 가진다. 
-                    // 샘플에서는 하나의 안에 정의된 디자인을 화면에 표시하는 것을 목표로하여 구현한다.
+                    FrameConverter convert = new FrameConverter();
+                    
+                    // 정의 : 프레임은 하나의 뷰 (Page)을 가진다. 
+                    // 프레임 마다 탭을 생성한다.
                     if (frame.type == "FRAME")
                     {
-                        foreach (FigmaNode instance in (frame as FigmaFrame).children)
-                        {
+                        View view = convert.ConvertToView(frame, null, rendererService) as View;
+                        scrollView.ContentView.AddChild(view);
+                        //foreach (FigmaNode instance in (frame as FigmaFrame).children)
+                        //{
 
-                        }
+
+                        //    // 프레임 안에 컨트롤을 표현한다.
+                        //    System.Diagnostics.Debug.WriteLine(instance.name);
+                        //    //var canvas = nodeProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
+
+                        //}
                     }
                 }
             }
