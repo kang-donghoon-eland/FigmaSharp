@@ -32,6 +32,7 @@ using FigmaSharp.Services;
 using FigmaSharp.Views.Wpf;
 using System.Windows.Controls;
 using System.Text;
+using System.Diagnostics;
 
 namespace FigmaSharp.Wpf.Converters
 {
@@ -57,8 +58,11 @@ namespace FigmaSharp.Wpf.Converters
 
            currengroupView.Opacity = figmaFrameEntity.opacity;
 
+            // 프레임 노드에 있는 설정 처리
             if (figmaFrameEntity.HasFills)
             {
+                Debug.WriteLine("프레임노드" + figmaFrameEntity.GetClassName());
+                Debug.WriteLine(string.Format("{0} {1}", figmaFrameEntity.type, figmaFrameEntity.name));
                 foreach (var fill in figmaFrameEntity.fills)
                 {
                     if (fill.type == "IMAGE")
@@ -79,7 +83,15 @@ namespace FigmaSharp.Wpf.Converters
                     //currengroupView.Layer.Hidden = !fill.visible;
                 }
             }
-            
+
+            // 프레임 노드 하위에 있는 객체 처리
+            foreach (FigmaNode node in figmaFrameEntity.children)
+            {
+                Debug.WriteLine("서브노드" + node.GetClassName());
+                Debug.WriteLine(string.Format("{0} {1}", node.type, node.name));
+                
+            }
+            //
             return view;
         }
 
