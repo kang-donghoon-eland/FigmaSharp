@@ -38,9 +38,10 @@ namespace BasicRendering.Wpf
 {
     public class ExampleViewManager
     {
-        const string fileName = "qVIUSmz8AkK158q8pY3L23";// https://www.figma.com/file/qVIUSmz8AkK158q8pY3L23/NicoTest?node-id=0%3A1
+        //const string fileName = "qVIUSmz8AkK158q8pY3L23";// https://www.figma.com/file/qVIUSmz8AkK158q8pY3L23/NicoTest?node-id=0%3A1
         //const string fileName = "N48UVj8HUdQOTxn2hfqGHgld";
         //const string fileName = "RAlQol7RzxvtYUQj24xHlZ";
+        const string fileName = "PjCZIDd8t179ruE80nS0ja"; 
 
         readonly NodeProvider nodeProvider;
 
@@ -99,12 +100,9 @@ namespace BasicRendering.Wpf
                         scrollView.ContentView.AddChild(view);
                         foreach (FigmaNode instance in (frame as FigmaFrame).children)
                         {
-
-
                             // 프레임 안에 컨트롤을 표현한다.
                             System.Diagnostics.Debug.WriteLine(instance.name);
                             //var canvas = nodeProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
-
                         }
                     }
                 }

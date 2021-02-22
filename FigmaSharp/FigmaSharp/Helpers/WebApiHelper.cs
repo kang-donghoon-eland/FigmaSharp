@@ -30,6 +30,7 @@ using System.Reflection;
 using FigmaSharp.Models;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace FigmaSharp.Helpers
 {
@@ -102,7 +103,9 @@ namespace FigmaSharp.Helpers
 
         public static FigmaFileResponse GetFigmaResponseFromFileContent (string figmaContent)
         {
-            return JsonConvert.DeserializeObject<FigmaFileResponse> (figmaContent, new FigmaResponseConverter ());
+            return JObject.Parse(figmaContent).ToObject< FigmaFileResponse>();
+            //var json = JsonConvert.DeserializeObject<FigmaFileResponse>(data.ToString(), new FigmaResponseConverter ());
+            //return json;
         }
 
         public static FigmaFileVersionResponse GetFigmaResponseFromFileVersionContent (string figmaVersionContent)

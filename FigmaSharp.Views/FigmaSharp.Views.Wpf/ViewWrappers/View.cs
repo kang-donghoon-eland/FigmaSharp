@@ -220,12 +220,14 @@ namespace FigmaSharp.Views.Wpf
 
         public Size IntrinsicContentSize => throw new NotImplementedException();
 
+        private Color background;
         public Color BackgroundColor {
-            get { 
-                return Color.White;
-            } 
+            get => background;
             set
-            { 
+            {
+                if (value == null)
+                    value = Color.White;
+                background = value;
             }
         }
 

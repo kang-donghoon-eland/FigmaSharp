@@ -52,7 +52,13 @@ namespace FigmaSharp.Wpf.Converters
                 view = new View();
 
             var currengroupView = view.NativeObject as FrameworkElement;
-            var figmaFrameEntity = (FigmaFrame)currentNode;
+            FigmaFrame figmaFrameEntity = new FigmaFrame();
+            figmaFrameEntity.name = currentNode.name;
+            figmaFrameEntity.Parent = currentNode.Parent;
+            figmaFrameEntity.id = currentNode.id;
+            figmaFrameEntity.type = currentNode.type;
+            figmaFrameEntity.visible = currentNode.visible;
+            //var figmaFrameEntity = (FigmaFrame)currentNode;
             currengroupView.Configure(currentNode);
 
 
@@ -85,11 +91,14 @@ namespace FigmaSharp.Wpf.Converters
             }
 
             // 프레임 노드 하위에 있는 객체 처리
-            foreach (FigmaNode node in figmaFrameEntity.children)
+            if (figmaFrameEntity.children != null)
             {
-                Debug.WriteLine("서브노드" + node.GetClassName());
-                Debug.WriteLine(string.Format("{0} {1}", node.type, node.name));
-                
+                foreach (FigmaNode node in figmaFrameEntity.children)
+                {
+                    Debug.WriteLine("서브노드" + node.GetClassName());
+                    Debug.WriteLine(string.Format("{0} {1}", node.type, node.name));
+
+                }
             }
             //
             return view;
