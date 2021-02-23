@@ -53,8 +53,8 @@ namespace BasicRendering.Wpf
         {
             InitializeComponent();
 
-            var scrollViewWrapper = new ScrollView(ContainerPanel);
-            manager = new ExampleViewManager(scrollViewWrapper);
+            //var scrollViewWrapper = new ScrollView(this.SampleContainer);
+            //manager = new ExampleViewManager(scrollViewWrapper);
         }
     }
 }

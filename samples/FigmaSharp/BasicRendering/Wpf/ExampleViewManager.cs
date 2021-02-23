@@ -87,24 +87,38 @@ namespace BasicRendering.Wpf
             {
                 List<View> viewNodeList = new List<View>();
                 layoutManager.Run( scrollView.ContentView, rendererService);
-                //scrollView.NodeName = canvas.name;
+                // scrollView.NodeName = canvas.name;
                 foreach (FigmaNode frame in canvas.children)
                 {
                     FrameConverter convert = new FrameConverter();
-                    
+
                     // 정의 : 프레임은 하나의 뷰 (Page)을 가진다. 
                     // 프레임 마다 탭을 생성한다.
                     if (frame.type == "FRAME")
                     {
-                        View view = convert.ConvertToView(frame, null, rendererService) as View;
-                        scrollView.ContentView.AddChild(view);
-                        foreach (FigmaNode instance in (frame as FigmaFrame).children)
-                        {
-                            // 프레임 안에 컨트롤을 표현한다.
-                            System.Diagnostics.Debug.WriteLine(instance.name);
-                            //var canvas = nodeProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
-                        }
+
+                        //scrollView.ContentView.AddChild(view);
+                        //foreach (FigmaNode instance in (frame as FigmaFrame).children)
+                        //{
+                        //    // 프레임 안에 컨트롤을 표현한다.
+                        //    System.Diagnostics.Debug.WriteLine(instance.name);
+                        //    //var canvas = nodeProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
+                        //}
                     }
+
+                    // design asset 
+                    if (frame.type == "COMPONENT_SET")
+                    {
+                        View view = convert.ConvertToView(frame, null, rendererService ) as View;
+                        //scrollView.ContentView.AddChild(view);
+                        //foreach (FigmaNode instance in (frame as FigmaFrame).children)
+                        //{
+                        //    // 프레임 안에 컨트롤을 표현한다.
+                        //    System.Diagnostics.Debug.WriteLine(instance.name);
+                        //    //var canvas = nodeProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
+                        //}
+                    }
+
                 }
             }
 
