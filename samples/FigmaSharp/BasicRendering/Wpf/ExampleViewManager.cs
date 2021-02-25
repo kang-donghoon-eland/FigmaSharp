@@ -32,6 +32,7 @@ using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Wpf;
+using FigmaSharp.Views.Wpf.Interfaces;
 using FigmaSharp.Wpf.Converters;
 
 namespace BasicRendering.Wpf
@@ -46,7 +47,10 @@ namespace BasicRendering.Wpf
         readonly NodeProvider nodeProvider;
 
         public string WindowTitle => nodeProvider.Response.name;
-
+        /// <summary>
+        /// 기존에 만들어진 View에 객체를 생성하여 추가하는 샘플다.
+        /// </summary>
+        /// <param name="scrollView"></param>
         public ExampleViewManager(IScrollView scrollView)
         {
             //we get the default basic view converters from the current loaded toolkit
@@ -124,6 +128,11 @@ namespace BasicRendering.Wpf
 
             //NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
             scrollView.AdjustToContent();
+        }
+
+        public ExampleViewManager(ITabView tabView)
+        {
+
         }
     }
 }
