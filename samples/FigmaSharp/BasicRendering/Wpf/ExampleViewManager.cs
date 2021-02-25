@@ -96,15 +96,30 @@ namespace BasicRendering.Wpf
                     // 프레임 마다 탭을 생성한다.
                     if (frame.type == "FRAME")
                     {
-                        View view = convert.ConvertToView(frame, null, rendererService) as View;
-                        scrollView.ContentView.AddChild(view);
-                        foreach (FigmaNode instance in (frame as FigmaFrame).children)
-                        {
-                            // 프레임 안에 컨트롤을 표현한다.
-                            System.Diagnostics.Debug.WriteLine(instance.name);
-                            //var canvas = nodeProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
-                        }
+                        var view = convert.GetControlType(frame);
+                        convert.ScanChildren(frame);
+                        //scrollView.ContentView.AddChild(view);
+                        //foreach (FigmaNode instance in (frame as FigmaFrame).children)
+                        //{
+                        //    // 프레임 안에 컨트롤을 표현한다.
+                        //    System.Diagnostics.Debug.WriteLine(instance.name);
+                        //    //var canvas = nodeProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
+                        //}
                     }
+
+                    if (frame.type == "COMPONENT_SET")
+                    {
+                        var control = convert.GetControlType(frame);
+                        
+                        //foreach (FigmaNode instance in (frame as FigmaFrame).children)
+                        //{
+                        //    // 프레임 안에 컨트롤을 표현한다.
+                        //    System.Diagnostics.Debug.WriteLine(instance.name);
+                        //    //var canvas = nodeProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
+                        //}
+                    }
+
+                    
                 }
             }
 
