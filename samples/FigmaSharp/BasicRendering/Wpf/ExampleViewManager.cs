@@ -32,6 +32,7 @@ using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Wpf;
+using FigmaSharp.Views.Wpf.Interfaces;
 using FigmaSharp.Wpf.Converters;
 
 namespace BasicRendering.Wpf
@@ -46,7 +47,10 @@ namespace BasicRendering.Wpf
         readonly NodeProvider nodeProvider;
 
         public string WindowTitle => nodeProvider.Response.name;
-
+        /// <summary>
+        /// 기존에 만들어진 View에 객체를 생성하여 추가하는 샘플다.
+        /// </summary>
+        /// <param name="scrollView"></param>
         public ExampleViewManager(IScrollView scrollView)
         {
             //we get the default basic view converters from the current loaded toolkit
@@ -87,17 +91,16 @@ namespace BasicRendering.Wpf
             {
                 List<View> viewNodeList = new List<View>();
                 layoutManager.Run( scrollView.ContentView, rendererService);
-                //scrollView.NodeName = canvas.name;
+                // scrollView.NodeName = canvas.name;
                 foreach (FigmaNode frame in canvas.children)
                 {
                     FrameConverter convert = new FrameConverter();
-                    
+
                     // 정의 : 프레임은 하나의 뷰 (Page)을 가진다. 
                     // 프레임 마다 탭을 생성한다.
                     if (frame.type == "FRAME")
                     {
-                        var view = convert.GetControlType(frame);
-                        convert.ScanChildren(frame);
+
                         //scrollView.ContentView.AddChild(view);
                         //foreach (FigmaNode instance in (frame as FigmaFrame).children)
                         //{
@@ -107,10 +110,11 @@ namespace BasicRendering.Wpf
                         //}
                     }
 
+                    // design asset 
                     if (frame.type == "COMPONENT_SET")
                     {
-                        var control = convert.GetControlType(frame);
-                        
+                        View view = convert.ConvertToView(frame, null, rendererService ) as View;
+                        //scrollView.ContentView.AddChild(view);
                         //foreach (FigmaNode instance in (frame as FigmaFrame).children)
                         //{
                         //    // 프레임 안에 컨트롤을 표현한다.
@@ -119,12 +123,16 @@ namespace BasicRendering.Wpf
                         //}
                     }
 
-                    
                 }
             }
 
             //NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
             scrollView.AdjustToContent();
+        }
+
+        public ExampleViewManager(ITabView tabView)
+        {
+
         }
     }
 }
