@@ -113,7 +113,7 @@ namespace BasicRendering.Wpf
                     // design asset 
                     if (frame.type == "COMPONENT_SET")
                     {
-                        View view = convert.ConvertToView(frame, null, rendererService ) as View;
+                        View view = convert.ConvertToView(frame, null, rendererService) as View;
                         //scrollView.ContentView.AddChild(view);
                         //foreach (FigmaNode instance in (frame as FigmaFrame).children)
                         //{
@@ -122,7 +122,6 @@ namespace BasicRendering.Wpf
                         //    //var canvas = nodeProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
                         //}
                     }
-
                 }
             }
 
