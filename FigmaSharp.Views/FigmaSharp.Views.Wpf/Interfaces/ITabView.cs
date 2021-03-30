@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FigmaSharp.Views.Wpf.Interfaces
 {
-    public interface ITabView
+    public interface ITabView:IView
     {
     }
 }

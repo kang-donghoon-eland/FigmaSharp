@@ -24,7 +24,7 @@ Asset을 json에서 확인해보면 COMPONET_SET으로 정의하고 있다. 이�
 
 제작된 화면의 디자인을 그대로 옮기는 작업은 생각보다 간단하다.
 
-Figma에서 원하는 디자인 Frame을 설택하고 복사한다.
+Figma에서 원하는 디자인 Frame을 선택하고 복사한다.
 
 SVG를 인식하는 페인트 도구(Adob Illustrator나 InkCanvas 등)에서 붙여넣기를 한다음 저장시 이를 SVG 또는 Split된 이미지로 내보내면 WPF에서 인식 할수 있도록 넣을수 있다.
 

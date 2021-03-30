@@ -38,7 +38,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using FigmaSharp.Views.Wpf; 
+using FigmaSharp.Views.Wpf;
+using FigmaSharp.Views.Wpf.ViewWrappers;
 
 namespace BasicRendering.Wpf
 {
@@ -53,8 +54,8 @@ namespace BasicRendering.Wpf
         {
             InitializeComponent();
 
-            //var scrollViewWrapper = new ScrollView(this.SampleContainer);
-            //manager = new ExampleViewManager(scrollViewWrapper);
+            var tabViewWrapper = new TabView(this.SampleContainer);
+            manager = new ExampleViewManager(tabViewWrapper);
         }
     }
 }

@@ -132,7 +132,15 @@ namespace BasicRendering.Wpf
 
         public ExampleViewManager(ITabView tabView)
         {
+            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+            nodeProvider = new RemoteNodeProvider();
+            var rendererService = new ViewRenderService(nodeProvider, converters);
+            ViewRenderServiceOptions option = new ViewRenderServiceOptions();
+            option.FrameInMainViews = true;
+            option.GenerateMainView = false;
+            option.ScanChildrenFromFigmaInstances = true;
 
+            rendererService.Start(fileName, tabView, option);
         }
     }
 }
